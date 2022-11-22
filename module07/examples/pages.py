@@ -1,4 +1,6 @@
 from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.common.by import By
+import selenium.webdriver
 
 class BasePage(object):
     def __init__(self, driver):
@@ -13,7 +15,7 @@ class MainPage(BasePage):
         self.driver.get('http://python.org')
 
     def search_for(self, find_me):
-        search_field = self.driver.find_element_by_id('id-search-field')
+        search_field = self.driver.find_element(By.ID, 'id-search-field')
         search_field.send_keys(find_me, Keys.RETURN)
 
 
@@ -39,11 +41,11 @@ class SearchResults(BasePage):
     def results(self):
         R = []
 
-        main_content = self.driver.find_element_by_class_name('main-content')
-        ul = main_content.find_element_by_css_selector('form > ul')
+        main_content = self.driver.find_element(By.CLASS_NAME, 'main-content')
+        ul = main_content.find_element(By.CSS_SELECTOR, 'form > ul')
         assert ul != None
-        for a in ul.find_elements_by_tag_name('a'):
-            print a.text
+        for a in ul.find_elements(By.TAG_NAME, 'a'):
+            print(a.text)
             R.append(a)
 
         return R
